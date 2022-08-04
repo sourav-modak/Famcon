@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import MapView, { Callout, Marker } from 'react-native-maps';
 import { StyleSheet, Pressable, Text, View, Dimensions, Image, SafeAreaView,  } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged} from 'firebase/auth';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
