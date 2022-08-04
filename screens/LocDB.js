@@ -1,19 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import { View, Image, Alert,Dimensions, SafeAreaView, KeyboardAvoidingView, Button, Pressable,Text,TextInput, StyleSheet } from 'react-native';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {useNavigation } from '@react-navigation/native';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged} from 'firebase/auth';
 import { getFirestore, updateDoc, doc, getDoc } from 'firebase/firestore';
-import MapDB from './MapDB';
 import FlashMessage from "react-native-flash-message";
 import { showMessage, hideMessage } from "react-native-flash-message";
-// import { borderColor } from 'react-native/Libraries/Components/View/ReactNativeStyleAttributes';
-// import Svg, {Use} from 'react-native-svg';
 import UserDetailsScreen from './UserDetailsScreen';
-import Stacks from '../navigation/stacks';
+
 
 const firestore = getFirestore();
 const firebaseConfig = {
