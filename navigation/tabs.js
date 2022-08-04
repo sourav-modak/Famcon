@@ -1,9 +1,8 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import LocDB from '../screens/LocDB';
 import MapDB from '../screens/MapDB';
-import UserDetailsScreen from '../screens/UserDetailsScreen'
-import {View, Text, Image, Button, StyleSheet, SafeAreaView} from 'react-native';
-import { withSafeAreaInsets } from 'react-native-safe-area-context';
+import {View, Image, StyleSheet} from 'react-native';
+
 
 const Tab = createBottomTabNavigator();
 const Tabs = () => {
@@ -34,16 +33,6 @@ const Tabs = () => {
                 </View>
             )
         }}/>
-        {/* <Tab.Screen name={"Profile"} component={UserDetailsScreen}  options={{
-            tabBarIcon: ({focused}) => (
-                <View>
-                    <Image
-                        style={styles.logo}
-                        source={require('../assets/profile.png')}
-                    />
-                </View>
-            )
-        }}/> */}
         </Tab.Navigator>
         
         
@@ -62,14 +51,6 @@ const styles = StyleSheet.create({
         borderRadius: 0,
         height: 50,
         backgroundColor:'white',
-        // shadowColor:'black', 
-        // shadowOffset: {
-        //     width: 10,
-        //     height: 10,
-        // },
-        // shadowOpacity: 0.2,
-        // shadowRadius: 5,
-        // elevation:5,
     },
     text: {
         color: 'teal',
