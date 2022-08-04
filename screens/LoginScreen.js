@@ -1,13 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import { View, Dimensions, KeyboardAvoidingView, Pressable,Text,TextInput, StyleSheet } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth';
-import SignupScreen from './SignupScreen'
-import MapDB from './MapDB';
-import LocDB from './LocDB';
-import Tabs from '../navigation/tabs';
+import { getAuth,  signInWithEmailAndPassword, onAuthStateChanged} from 'firebase/auth';
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyDNlxLPTKn5Hfr3i1tA_JrrrWPR-4B2Ra4",
