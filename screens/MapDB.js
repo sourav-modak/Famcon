@@ -32,30 +32,31 @@ const MapDB = ()=> {
     const [famname, setFamname] = useState("dummyName")
     const [lat, setLat] = useState(11)
     const [long, setLong] = useState(22)
+    const [latdel, setLatdel] = useState(0.9)
+    const [longdel, setLongdel] = useState(0.9)
     
     
     useEffect(()=>{
       //fetch fam email
-    const EmailFetch= async()=>
-    {    
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-           setFamemail(docSnap.data().famemail) 
-        } else {
-          console.log("No such email!");
-        }
-        
-    }
+      const EmailFetch= async()=>
+      {    
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) {
+            setFamemail(docSnap.data().famemail) 
+          } else {
+            console.log("No such email!");
+          }
+          
+      }
       EmailFetch();
       console.log('Email Fetch func: '+famemail);
-  }, [])
+  }, [])  
   
     
     //fetch coords
     
     const FamilyLocationFetch= async()=>
     {    
-     
       const path2 = "AppUsers/"+famemail;
       const docRef2 = doc(firestore,path2);
       console.log('Loc Fetch func: '+famemail);
@@ -68,6 +69,7 @@ const MapDB = ()=> {
           console.log("No such coords!");
         }
     }
+
     const MyLocationFetch= async()=>
     {    
       const docSnap = await getDoc(docRef);
@@ -82,22 +84,24 @@ const MapDB = ()=> {
 
     return (   
     <SafeAreaView style={styles.container}>
-        <View style={styles.header}><Text style={styles.headerText}>Map</Text></View>
+        <View style={styles.header}>
+          <Text style={styles.headerText}>Map</Text>
+        </View>
         <MapView 
             style={styles.map} 
             initialRegion={{
               latitude: lat,
               longitude:  long,
-              latitudeDelta: 0.6,
-              longitudeDelta: 0.6,
+              latitudeDelta: latdel,
+              longitudeDelta: longdel,
             }} 
             onMapReady={MyLocationFetch}
             provider='google'
             region={{
               latitude:  lat,
               longitude:  long,
-              latitudeDelta: 0.6,
-              longitudeDelta:0.6,
+              latitudeDelta: latdel,
+              longitudeDelta: longdel,
             }}
             loadingEnabled={true}
             loadingBackgroundColor={"#495371"}
@@ -111,19 +115,45 @@ const MapDB = ()=> {
              </Marker>
 
         </MapView>
-        <View style={styles.buttonContainer}>
-          <Pressable
-              style={[styles.button]}
-              onPress={MyLocationFetch}>
-                
-              <Text style={styles.buttonText}>Your Location</Text>
-          </Pressable>
-          <Pressable
-              style={[styles.button]}
-              onPress={FamilyLocationFetch}>
-              <Text style={styles.buttonText}>Family Location</Text>
-          </Pressable>
+        <View style={styles.textContainer}>
+          <Text style={{color:'white', fontWeight:'bold', fontSize:20, padding:1}}>{famname}'s Location</Text>
         </View>
+        <View style={styles.bts}>
+          <View style={styles.buttonContainer}>
+            <Pressable
+                style={[styles.button]}
+                onPress={MyLocationFetch}
+                android_ripple={{color: 'white', borderless: false}}>
+                <Text style={styles.buttonText}>Your Location</Text>
+            </Pressable>
+            <Pressable
+                style={[styles.button]}
+                onPress={FamilyLocationFetch}
+                android_ripple={{color: 'white', borderless: false}}>
+                <Text style={styles.buttonText}>Family Location</Text>
+            </Pressable>
+          </View>
+          <View style={styles.buttonContainer2}>
+            <Pressable
+                style={[styles.button2]}
+                onPress={() => {
+                  if(latdel>0.2){
+                    setLatdel(latdel-0.1);
+                    setLongdel(longdel-0.1);
+                  } 
+                }}>
+                <Text style={styles.buttonText}>+</Text>
+            </Pressable>
+            <Pressable
+                style={[styles.button2]}
+                onPress={() => {
+                  setLatdel(latdel+0.1);
+                  setLongdel(longdel+0.1);
+                }}>
+                <Text style={styles.buttonText}>-</Text>
+            </Pressable>
+          </View>
+        </View> 
     </SafeAreaView>
   );
 }
@@ -149,18 +179,35 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     position:'relative',
   },
-  buttonContainer:{
+  textContainer:{
+    fontSize:30, marginTop:0,justifyContent:'center', alignContent:'center',
+  },
+  bts:{
     flex:1, fontSize:30, marginTop:0, flexDirection:'row', justifyContent:'center', alignContent:'center',
+  },
+  buttonContainer:{
+    flex:2.3, fontSize:30, marginTop:0, flexDirection:'row', justifyContent:'center', alignContent:'center',
+  },
+  buttonContainer2:{
+    flex:1, marginTop:0, flexDirection:'row', justifyContent:'center', alignContent:'center',
   },
   button: {
     flex:1,
-    borderRadius: 10,
     padding: 10,
     elevation: 2, 
     backgroundColor: "teal",
     margin: 10,
     height:40,
     width:150,
+  },
+  button2: {
+    flex:1,
+    borderRadius: 20,
+    padding: 10,
+    elevation: 5, 
+    backgroundColor: "teal",
+    margin: 10,
+    
   },
   buttonText:{
     textAlign: 'center', color:'white', fontWeight:"bold",
